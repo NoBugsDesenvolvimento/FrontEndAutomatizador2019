@@ -58,13 +58,13 @@ export default class Functions extends Component {
               </div>
             </div>
             <div className="ui centered">
-              <button
-                className="ui labelled icon button"
+              <div
+                className="ui labeled icon button"
                 onClick={this.onSubmit}
               >
-                <i className="paper icon" />
+                <i className="file alternate icon" />
                 Gerar PESw
-              </button>
+              </div>
             </div>
           </div>
         </div>

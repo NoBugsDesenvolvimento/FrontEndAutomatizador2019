@@ -9,7 +9,7 @@ export default class FuncionalidadeModal extends Component {
       funcionalidades: [],
       open: false,
       nome: " ",
-      preco: 0,
+      valor: 0,
       descricao: " "
     };
   }
@@ -24,23 +24,22 @@ export default class FuncionalidadeModal extends Component {
     this.setState({ open: false });
   };
   onChange = (e, data) => {
-	const {nome,valor,descricao}= JSON.parse(data.value);
+    const { nome, valor, descricao } = JSON.parse(data.value);
     this.setState({
-		nome,
-		preco: valor,
-		descricao
-	})
+      nome,
+      valor,
+      descricao
+    });
   };
   setNome = e => {
     this.setState({ nome: e.target.value });
   };
-  setPreco = e => {
-    this.setState({ preco: e.target.value });
+  setvalor = e => {
+    this.setState({ valor: e.target.value });
   };
   setDesc = e => {
     this.setState({ descricao: e.target.value });
   };
-
   submit = () => {};
   render() {
     return (
@@ -96,17 +95,19 @@ export default class FuncionalidadeModal extends Component {
             </div>
             <div className="ui field focus">
               <label>Preço</label>
-			  <div className="ui left labeled input">
-				<label className="ui label" htmlFor="preco">R$</label>
-				<input
-					value={this.state.preco}
-					onChange={this.setPreco}
-					id="preco"
-					type="number"
-					step="any"
-					placeholder="Preço da funcionalidade"
-				/>
-			  </div>
+              <div className="ui left labeled input">
+                <label className="ui label" htmlFor="valor">
+                  R$
+                </label>
+                <input
+                  value={this.state.valor}
+                  onChange={this.setvalor}
+                  id="valor"
+                  type="number"
+                  step="any"
+                  placeholder="Preço da funcionalidade"
+                />
+              </div>
             </div>
           </div>
         </div>
