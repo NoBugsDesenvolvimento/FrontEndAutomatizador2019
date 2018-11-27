@@ -1,16 +1,26 @@
-import React, { Component } from 'react';
-import './css/App.css';
-import "./css/index.css"
+import React, { Component } from "react";
+import { createStore } from "redux"
+import { Provider } from "react-redux"
 
-import Functions from "./views/pages/functions"
+// Importing CSS
+import "./css/App.css";
+import "./css/index.css";
+
+import Functions from "./views/pages/functions";
+
+import reducers from "./controllers/store"
+
+const store = createStore(reducers)
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <div id="cabecalho"></div>
-        <Functions/>
-      </div>
+      <Provider store={store}>
+        <div className="App">
+          <div id="cabecalho" />
+          <Functions />
+        </div>
+      </Provider>
     );
   }
 }

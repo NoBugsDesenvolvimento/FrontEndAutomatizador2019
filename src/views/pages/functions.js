@@ -1,12 +1,12 @@
 import React, { Component } from "react";
+import { connect } from "react-redux"
 
 // Components
 import FuncionalidadeModal from "../components/modal";
-export default class Functions extends Component {
+class FunctionList extends Component {
   constructor() {
     super();
     this.state = {
-      funcionalidades: [],
       cliente: "",
       data: new Date(),
       validade: 7
@@ -35,7 +35,17 @@ export default class Functions extends Component {
                 <th>Descrição</th>
               </tr>
             </thead>
-            <tbody id="table" />
+            <tbody id="table">
+                {
+                  this.props.funcionalidades.map(func =>
+                    <tr>
+                      <td>{func.nome}</td>
+                      <td>{func.valor}</td>
+                      <td>{func.descricao}</td>
+                    </tr>
+                    )
+                }
+            </tbody>
           </table>
           <div className="ui form">
             <div className="three fields">
@@ -72,3 +82,11 @@ export default class Functions extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    funcionalidades: state.funcionalidades
+  }
+}
+
+export default connect(mapStateToProps)(FunctionList)

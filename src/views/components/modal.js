@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import { Button, Modal, Dropdown } from "semantic-ui-react";
 
-export default class FuncionalidadeModal extends Component {
+class FuncionalidadeModal extends Component {
   constructor() {
     super();
     this.state = {
@@ -10,7 +11,8 @@ export default class FuncionalidadeModal extends Component {
       open: false,
       nome: " ",
       valor: 0,
-      descricao: " "
+      descricao: " ",
+      id: 0
     };
   }
   componentDidMount = async function() {
@@ -21,11 +23,12 @@ export default class FuncionalidadeModal extends Component {
     this.setState({ funcionalidades: await res.data });
   };
   close = () => {
-    this.setState({ open: false });
+    this.setState({ open: false, id: "", descricao: "", valor: 0, nome: "" });
   };
   onChange = (e, data) => {
-    const { nome, valor, descricao } = JSON.parse(data.value);
+    const { id, nome, valor, descricao } = JSON.parse(data.value);
     this.setState({
+      id,
       nome,
       valor,
       descricao
@@ -40,7 +43,6 @@ export default class FuncionalidadeModal extends Component {
   setDesc = e => {
     this.setState({ descricao: e.target.value });
   };
-  submit = () => {};
   render() {
     return (
       <Modal
@@ -115,7 +117,17 @@ export default class FuncionalidadeModal extends Component {
           <Button negative onClick={this.close}>
             Fechar
           </Button>
-          <Button positive onClick={this.submit}>
+          <Button
+            positive
+            onClick={() =>
+              this.props.addFunc({
+                id: this.state.id,
+                nome: this.state.nome,
+                valor: this.state.valor,
+                descricao: this.state.descricao
+              })
+            }
+          >
             Adicionar
           </Button>
         </Modal.Actions>
@@ -123,3 +135,14 @@ export default class FuncionalidadeModal extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addFunc: nova => dispatch({ type: "ADD_FUNC", data: nova })
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(FuncionalidadeModal);

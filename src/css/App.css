@@ -33,7 +33,7 @@
 
 #cabecalho{
   width: 100%;
-  background: url('../img/header_branco.png');
+  background: url('../static/img/header_branco.png');
   line-height: 40px;
   height: 75px !important;
   margin-bottom: 20px;
