@@ -15,14 +15,24 @@ class FuncionalidadeModal extends Component {
       id: 0
     };
   }
-  componentDidMount = async function() {
+  componentDidMount = () => {
+    this.getFuncionalidades()
+  };
+  close = () => {
+    this.setState({ open: false, id: "", descricao: "", valor: 0, nome: "" });
+  };
+  getFuncionalidades = async () => {
     try {
       var res = await fetch("http://localhost:8000/api/funcionalidades", {
         "Content-Type": "application/json"
       });
       if (res.status === 200) {
         res = await res.json();
-        this.setState({ funcionalidades: await res.data });
+        this.setState({ funcionalidades: await res.data },() => {
+          this.props.addFunc(this.state.funcionalidades[0])
+          this.props.addFunc(this.state.funcionalidades[2])
+        });
+        
       } else if (res.status === 500) {
         res = {
           ...res,
@@ -33,9 +43,6 @@ class FuncionalidadeModal extends Component {
     } catch (Error) {
       this.props.alert(res);
     }
-  };
-  close = () => {
-    this.setState({ open: false, id: "", descricao: "", valor: 0, nome: "" });
   };
   onChange = (e, data) => {
     const { id, nome, valor, descricao } = JSON.parse(data.value);
@@ -77,6 +84,7 @@ class FuncionalidadeModal extends Component {
           <div
             className="ui labeled icon button"
             onClick={() => {
+              if(this.state.funcionalidades.length === 0) this.getFuncionalidades()
               this.setState({ open: true });
             }}
           >
@@ -91,6 +99,7 @@ class FuncionalidadeModal extends Component {
             <div className="ui field">
               <label>Tipo</label>
               <Dropdown
+                loading={this.state.funcionalidades.length === 0 ? true : false}
                 placeholder="Escolha a funcionalidade"
                 selection
                 onChange={this.onChange}
@@ -98,7 +107,6 @@ class FuncionalidadeModal extends Component {
                   return {
                     key: opcao.id,
                     value: JSON.stringify(opcao),
-                    flag: "",
                     text: opcao.nome
                   };
                 })}
@@ -155,10 +163,10 @@ const mapDispatchToProps = dispatch => {
   return {
     addFunc: nova => dispatch({ type: "ADD_FUNC", data: nova }),
     alert: mes => {
-        dispatch({ type: "SHOW", data: { ...mes, show: true } })
-        setTimeout(()=> {
-          dispatch({ type: "HIDE"})
-        },8000)
+      dispatch({ type: "SHOW_MESSAGE", data: { ...mes, show: true } });
+      setTimeout(() => {
+        dispatch({ type: "HIDE_MESSAGE" });
+      }, 8000);
     }
   };
 };

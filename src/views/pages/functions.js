@@ -48,7 +48,7 @@ class FunctionList extends Component {
             </thead>
             <tbody id="table">
               {this.props.funcionalidades.map(func => (
-                <tr>
+                <tr key={func.nome+func.descricao}>
                   <td className="collapsing">{func.nome}</td>
                   <td className="collapsing">R$ {func.valor.toFixed(2)}</td>
                   <td>{func.descricao}</td>
@@ -129,7 +129,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    closeMessage: () => dispatch({ type: "HIDE" })
+    closeMessage: () => dispatch({ type: "HIDE_MESSAGE" })
   };
 };
 
