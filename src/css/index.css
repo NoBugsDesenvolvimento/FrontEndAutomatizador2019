@@ -12,3 +12,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+/* Box para a notificação */
+.message-box {
+  position: absolute;
+  bottom: 7%;
+  left: 5%;
+  z-index: 99;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Configurando para ficar no centro em dispositivos mobile */
+@media only screen and (min-width: 360px) and (max-width: 767px) {
+  .message-box {
+    position: sticky;
+  }
+}

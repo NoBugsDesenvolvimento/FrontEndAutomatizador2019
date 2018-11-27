@@ -10,17 +10,29 @@ class FuncionalidadeModal extends Component {
       funcionalidades: [],
       open: false,
       nome: " ",
-      valor: 0,
+      valor: 0.0,
       descricao: " ",
       id: 0
     };
   }
   componentDidMount = async function() {
-    var res = await fetch("http://localhost:8000/api/funcionalidades", {
-      "Content-Type": "application/json"
-    });
-    res = await res.json();
-    this.setState({ funcionalidades: await res.data });
+    try {
+      var res = await fetch("http://localhost:8000/api/funcionalidades", {
+        "Content-Type": "application/json"
+      });
+      if (res.status === 200) {
+        res = await res.json();
+        this.setState({ funcionalidades: await res.data });
+      } else if (res.status === 500) {
+        res = {
+          ...res,
+          message: "Erro de servidor. Entre em contato com o Administrador."
+        };
+        throw res;
+      }
+    } catch (Error) {
+      this.props.alert(res);
+    }
   };
   close = () => {
     this.setState({ open: false, id: "", descricao: "", valor: 0, nome: "" });
@@ -38,10 +50,23 @@ class FuncionalidadeModal extends Component {
     this.setState({ nome: e.target.value });
   };
   setvalor = e => {
-    this.setState({ valor: e.target.value });
+    this.setState({ valor: parseFloat(e.target.value) });
   };
   setDesc = e => {
     this.setState({ descricao: e.target.value });
+  };
+  add = e => {
+    this.props.addFunc({
+      id: this.state.id,
+      nome: this.state.nome,
+      valor: this.state.valor,
+      descricao: this.state.descricao
+    });
+    this.close();
+    this.props.alert({
+      status: 200,
+      message: "Adicionado com sucesso!"
+    });
   };
   render() {
     return (
@@ -106,7 +131,7 @@ class FuncionalidadeModal extends Component {
                   onChange={this.setvalor}
                   id="valor"
                   type="number"
-                  step="any"
+                  step="0.01"
                   placeholder="Preço da funcionalidade"
                 />
               </div>
@@ -117,17 +142,7 @@ class FuncionalidadeModal extends Component {
           <Button negative onClick={this.close}>
             Fechar
           </Button>
-          <Button
-            positive
-            onClick={() =>
-              this.props.addFunc({
-                id: this.state.id,
-                nome: this.state.nome,
-                valor: this.state.valor,
-                descricao: this.state.descricao
-              })
-            }
-          >
+          <Button positive onClick={this.add}>
             Adicionar
           </Button>
         </Modal.Actions>
@@ -138,7 +153,13 @@ class FuncionalidadeModal extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addFunc: nova => dispatch({ type: "ADD_FUNC", data: nova })
+    addFunc: nova => dispatch({ type: "ADD_FUNC", data: nova }),
+    alert: mes => {
+        dispatch({ type: "SHOW", data: { ...mes, show: true } })
+        setTimeout(()=> {
+          dispatch({ type: "HIDE"})
+        },8000)
+    }
   };
 };
 
