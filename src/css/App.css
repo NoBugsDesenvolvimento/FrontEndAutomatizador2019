@@ -30,3 +30,15 @@
     transform: rotate(360deg);
   }
 }
+
+#cabecalho{
+  width: 100%;
+  background: url('../img/header_branco.png');
+  line-height: 40px;
+  height: 75px !important;
+  margin-bottom: 20px;
+  background-color: #244061;
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
