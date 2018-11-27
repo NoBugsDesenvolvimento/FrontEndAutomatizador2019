@@ -24,10 +24,12 @@ export default class FuncionalidadeModal extends Component {
     this.setState({ open: false });
   };
   onChange = (e, data) => {
-    const opcao = JSON.parse(data.value);
-    this.setDesc({ target: { value: opcao.descricao } });
-    this.setNome({ target: { value: opcao.nome } });
-    this.setPreco({ target: { value: opcao.preco } });
+	const {nome,valor,descricao}= JSON.parse(data.value);
+    this.setState({
+		nome,
+		preco: valor,
+		descricao
+	})
   };
   setNome = e => {
     this.setState({ nome: e.target.value });
@@ -94,13 +96,17 @@ export default class FuncionalidadeModal extends Component {
             </div>
             <div className="ui field focus">
               <label>Preço</label>
-              <input
-                value={this.state.preco}
-                onChange={this.setPreco}
-                type="number"
-                step="any"
-                placeholder="Preço da funcionalidade"
-              />
+			  <div className="ui left labeled input">
+				<label className="ui label" htmlFor="preco">R$</label>
+				<input
+					value={this.state.preco}
+					onChange={this.setPreco}
+					id="preco"
+					type="number"
+					step="any"
+					placeholder="Preço da funcionalidade"
+				/>
+			  </div>
             </div>
           </div>
         </div>
