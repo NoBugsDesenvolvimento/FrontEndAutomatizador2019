@@ -6,7 +6,7 @@ import FuncionalidadeModal from "../components/Modal";
 import { Message } from "semantic-ui-react";
 import { DateInput } from "semantic-ui-calendar-react";
 
-class FunctionList extends Component {
+class Funcionalidades extends Component {
   constructor() {
     super();
     this.state = {
@@ -136,4 +136,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FunctionList);
+)(Funcionalidades);

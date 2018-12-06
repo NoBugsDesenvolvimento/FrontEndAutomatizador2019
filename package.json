@@ -29,6 +29,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "react-router-dom": "^4.3.1",
     "webpack": "^4.19.1"
   }
 }
