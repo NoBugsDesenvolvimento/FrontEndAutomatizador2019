@@ -9,8 +9,7 @@ import { Switch, Route } from "react-router";
 import { HashRouter } from "react-router-dom";
 
 // Importando componentes
-import { Login, Funcionalidades } from "../../views/pages";
-import { Transition } from "semantic-ui-react";
+import { Login, Funcionalidades } from "../../views/pages"
 
 export default class Routing extends Component {
   Routes = [
