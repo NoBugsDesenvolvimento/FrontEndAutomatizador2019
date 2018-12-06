@@ -1,6 +1,14 @@
+/*
+    Autor: Matheus dos Reis <matheusdrdj@gmail.com>
+    Data: 06/12/2018
+*/
+
 import React, { Component } from "react";
+
+
 import { createStore } from "redux";
 import { Provider } from "react-redux";
+
 // Importing CSS
 import "./css/App.css";
 import "./css/index.css";
