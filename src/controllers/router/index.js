@@ -11,17 +11,17 @@ import { HashRouter } from "react-router-dom";
 // Importando componentes
 import { Login, Funcionalidades } from "../../views/pages"
 
-export default class Routing extends Component {
-  Routes = [
-    { path: "/", Component: Login, exact: true },
-    { path: "/funcionalidades", Component: Funcionalidades, exact: false }
-  ];
+export const Routes = [
+  { name: "Inicial", path: "/", Component: Login, exact: true },
+  { name: "Funcionalidades", path: "/funcionalidades", Component: Funcionalidades, exact: false },
+];
 
+export default class Routing extends Component {
   render() {
     return (
       <HashRouter basename="#">
         <Switch>
-          {this.Routes.map(route => (
+          {Routes.map(route => (
             <Route
               exact={route.exact}
               path={route.path}

@@ -14,7 +14,7 @@ import "./css/index.css";
 import Logo from "./static/img/logo.png";
 
 // Importando router
-import Roteador from "./controllers/router";
+import Roteador, { Routes } from "./controllers/router";
 
 // Importando e criando a Store
 import reducers from "./controllers/store";
@@ -29,12 +29,11 @@ class App extends Component {
             <a href="#/" class="item">
               <img src={Logo} alt="Logo" />
             </a>
-            <a class="item" href="/#/">
-              Inicial
-            </a>
-            <a class="item" href="/#/funcionalidades">
-              Funcionalidades
-            </a>
+            {Routes.map(rota => (
+              <a class="item" href={`/#${rota.path}`}>
+                {rota.name}
+              </a>
+            ))}
           </div>
           <Roteador />
         </div>
