@@ -34,6 +34,7 @@ class FuncionalidadeModal extends Component {
       if (res.status === 200) {
         res = await res.json();
         this.setState({ funcionalidades: await res }, () => {
+          // Se a lista houver vazia, não foi inicializado.
           if (this.props.lista.length === 0) {
             this.props.addFunc(this.state.funcionalidades[0]);
             this.props.addFunc(this.state.funcionalidades[2]);
@@ -168,11 +169,11 @@ class FuncionalidadeModal extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addFunc: nova => dispatch({ type: "ADD_FUNC", data: nova }),
-    alert: mes => {
-      dispatch({ type: "SHOW_MESSAGE", data: { ...mes, show: true } });
+    addFunc: nova => dispatch({ type: "ADD_FUNC", data: nova }), // Ação que adiciona funcionalidade à lista
+    alert: msg => {
+      dispatch({ type: "SHOW_MESSAGE", data: { ...msg, show: true } }); // Exibe mensagem de alerta
       setTimeout(() => {
-        dispatch({ type: "HIDE_MESSAGE" });
+        dispatch({ type: "HIDE_MESSAGE" }); // Oculta mensagem de alerta
       }, 8000);
     }
   };
@@ -180,7 +181,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    lista: state.funcionalidades
+    lista: state.funcionalidades // Recupera a lista de funcionalidades escolhidas
   }
 }
 
