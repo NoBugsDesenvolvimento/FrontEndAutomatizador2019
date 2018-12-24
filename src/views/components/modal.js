@@ -21,7 +21,7 @@ class FuncionalidadeModal extends Component {
     };
   }
   componentDidMount = () => {
-    this.getFuncionalidades()
+    this.getFuncionalidades();
   };
   close = () => {
     this.setState({ open: false, id: "", descricao: "", valor: 0, nome: "" });
@@ -33,11 +33,12 @@ class FuncionalidadeModal extends Component {
       });
       if (res.status === 200) {
         res = await res.json();
-        this.setState({ funcionalidades: await res.data },() => {
-          this.props.addFunc(this.state.funcionalidades[0])
-          this.props.addFunc(this.state.funcionalidades[2])
+        this.setState({ funcionalidades: await res }, () => {
+          if (this.props.lista.length === 0) {
+            this.props.addFunc(this.state.funcionalidades[0]);
+            this.props.addFunc(this.state.funcionalidades[2]);
+          }
         });
-        
       } else if (res.status === 500) {
         res = {
           ...res,
@@ -89,7 +90,8 @@ class FuncionalidadeModal extends Component {
           <div
             className="ui labeled icon button"
             onClick={() => {
-              if(this.state.funcionalidades.length === 0) this.getFuncionalidades()
+              if (this.state.funcionalidades.length === 0)
+                this.getFuncionalidades();
               this.setState({ open: true });
             }}
           >
@@ -176,7 +178,13 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+const mapStateToProps = state => {
+  return {
+    lista: state.funcionalidades
+  }
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(FuncionalidadeModal);

@@ -35,10 +35,18 @@
   width: 100%;
   background: url('../static/img/header_branco.png');
   line-height: 40px;
+  margin-bottom: -20px;
   height: 75px !important;
-  margin-bottom: 20px;
   background-color: #244061;
   background-position: center center;
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+.theme-color {
+  background: #244061 !important;
+}
+
+.menu {
+  border-radius: 0 !important;
 }
