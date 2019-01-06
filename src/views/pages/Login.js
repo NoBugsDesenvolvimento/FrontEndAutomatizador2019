@@ -21,7 +21,7 @@ export default class Login extends Component {
   }
   render() {
     return (
-      <Transition visible={this.state.visible} duration={3000} animation="fade">
+      <Transition visible={this.state.visible} duration={1500} animation="fade">
         <div class="ui center aligned container">
           <div
             class="ui centered card"

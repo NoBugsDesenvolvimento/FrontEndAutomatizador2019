@@ -77,10 +77,6 @@ class FuncionalidadeModal extends Component {
       description: this.state.description
     });
     this.close();
-    this.props.alert({
-      status: 200,
-      message: "Adicionado com sucesso!"
-    });
   };
   render() {
     return (
@@ -182,8 +178,8 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     lista: state.funcionalidades // Recupera a lista de funcionalidades escolhidas
-  }
-}
+  };
+};
 
 export default connect(
   mapStateToProps,

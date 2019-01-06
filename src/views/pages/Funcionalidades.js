@@ -26,14 +26,14 @@ class Funcionalidades extends Component {
     this.props.closeMessage();
   };
   setDate = (e, { value }) => {
-    let valido = new Date(value)
-    valido = valido.setDate(valido.getDate() + this.state.validade)
-    this.setState({ data: value, valido });
-
+    let [ dia, mes, ano] = value.split('-')
+    let valido = new Date(ano,mes-1,dia)
+    valido.setDate(valido.getDate() + this.state.validade);
+    this.setState({ data: value, valido: valido.toLocaleDateString("pt") });
   };
   handleAnalista = e => this.setState({ analista: e.target.value });
   handleValidade = e => this.setState({ validade: e.target.value });
-  handleVisao = e => this.setState({ visao: e.target.value})
+  handleVisao = e => this.setState({ visao: e.target.value });
   render() {
     return (
       <div>
@@ -54,18 +54,21 @@ class Funcionalidades extends Component {
                 <th>Nome</th>
                 <th>Valor</th>
                 <th>Descrição</th>
-                <th></th>
+                <th />
               </tr>
             </thead>
             <tbody id="table">
-              {this.props.funcionalidades.map((func,index) => (
+              {this.props.funcionalidades.map((func, index) => (
                 <tr key={func.name + func.description}>
                   <td className="collapsing">{func.name}</td>
                   <td className="collapsing">R$ {func.value.toFixed(2)}</td>
                   <td>{func.description}</td>
                   <td className="collapsing">
-                    <div className="ui icon error button" onClick={e => this.props.remove(index)}>
-                      <i className="remove icon"/>
+                    <div
+                      className="ui icon error button"
+                      onClick={e => this.props.remove(index)}
+                    >
+                      <i className="remove icon" />
                     </div>
                   </td>
                 </tr>
@@ -133,9 +136,20 @@ class Funcionalidades extends Component {
                   Gerar PESw
                 </button>
               </div>
-              <input hidden name="token" value={this.state.token} />
-              <input hidden name="valido" value={this.state.valido} />
               <input
+                onChange={() => {}}
+                hidden
+                name="token"
+                value={this.state.token}
+              />
+              <input
+                onChange={() => {}}
+                hidden
+                name="valido"
+                value={this.state.valido}
+              />
+              <input
+                onChange={() => {}}
                 hidden
                 name="funcionalidades"
                 value={JSON.stringify(this.props.funcionalidades)}
@@ -179,7 +193,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     closeMessage: () => dispatch({ type: "HIDE_MESSAGE" }),
-    remove: (index) => dispatch({type: "REMOVE_FUNC", index })
+    remove: index => dispatch({ type: "REMOVE_FUNC", index })
   };
 };
 

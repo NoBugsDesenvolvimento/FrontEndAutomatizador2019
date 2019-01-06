@@ -29,11 +29,11 @@ class App extends Component {
             <a href="#/" className="item">
               <img src={Logo} alt="Logo" />
             </a>
-            {Routes.map(rota => (
-              <a style={{ fontSize: 20 }} key={rota.name} className="item" href={`/#${rota.path}`}>
-                {rota.name}
-              </a>
-            ))}
+            {Routes.map(rota => rota.menu ?
+                <a style={{ fontSize: 20 }} key={rota.name} className="item" href={`/#${rota.rota}`}>
+                  {rota.name}
+                </a> : <div/>)
+            }
           </div>
           <Roteador />
         </div>
