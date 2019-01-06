@@ -19,10 +19,11 @@ export const Routes = [
 export default class Routing extends Component {
   render() {
     return (
-      <HashRouter basename="#">
+      <HashRouter>
         <Switch>
           {Routes.map(route => (
             <Route
+              key={route.path}
               exact={route.exact}
               path={route.path}
               component={route.Component}

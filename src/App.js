@@ -25,12 +25,12 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div className="App">
-          <div class="ui theme-color inverted borderless menu">
-            <a href="#/" class="item">
+          <div className="ui theme-color inverted borderless menu">
+            <a href="#/" className="item">
               <img src={Logo} alt="Logo" />
             </a>
             {Routes.map(rota => (
-              <a class="item" href={`/#${rota.path}`}>
+              <a key={rota.name} className="item" href={`/#${rota.path}`}>
                 {rota.name}
               </a>
             ))}

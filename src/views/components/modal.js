@@ -14,9 +14,9 @@ class FuncionalidadeModal extends Component {
     this.state = {
       funcionalidades: [],
       open: false,
-      nome: " ",
-      valor: 0.0,
-      descricao: " ",
+      name: " ",
+      value: 0.0,
+      description: " ",
       id: 0
     };
   }
@@ -24,7 +24,7 @@ class FuncionalidadeModal extends Component {
     this.getFuncionalidades();
   };
   close = () => {
-    this.setState({ open: false, id: "", descricao: "", valor: 0, nome: "" });
+    this.setState({ open: false, id: "", description: "", value: 0, name: "" });
   };
   getFuncionalidades = async () => {
     try {
@@ -52,29 +52,29 @@ class FuncionalidadeModal extends Component {
     }
   };
   onChange = (e, data) => {
-    const { id, nome, valor, descricao } = JSON.parse(data.value);
+    const { id, name, value, description } = JSON.parse(data.value);
     this.setState({
       id,
-      nome,
-      valor,
-      descricao
+      name,
+      value,
+      description
     });
   };
-  setNome = e => {
-    this.setState({ nome: e.target.value });
+  setName = e => {
+    this.setState({ name: e.target.value });
   };
-  setvalor = e => {
-    this.setState({ valor: parseFloat(e.target.value) });
+  setValue = e => {
+    this.setState({ value: parseFloat(e.target.value) });
   };
   setDesc = e => {
-    this.setState({ descricao: e.target.value });
+    this.setState({ description: e.target.value });
   };
   add = e => {
     this.props.addFunc({
       id: this.state.id,
-      nome: this.state.nome,
-      valor: this.state.valor,
-      descricao: this.state.descricao
+      name: this.state.name,
+      value: this.state.value,
+      description: this.state.description
     });
     this.close();
     this.props.alert({
@@ -115,37 +115,37 @@ class FuncionalidadeModal extends Component {
                   return {
                     key: opcao.id,
                     value: JSON.stringify(opcao),
-                    text: opcao.nome
+                    text: opcao.name
                   };
                 })}
               />
             </div>
             <div className="ui field focus">
-              <label>Nome</label>
+              <label>name</label>
               <input
-                value={this.state.nome}
-                onChange={this.setNome}
-                placeholder="Nome da funcionalidade"
+                value={this.state.name}
+                onChange={this.setName}
+                placeholder="name da funcionalidade"
               />
             </div>
             <div className="ui field">
               <label>Descrição</label>
               <textarea
                 onChange={this.setDesc}
-                value={this.state.descricao}
+                value={this.state.description}
                 rows="3"
               />
             </div>
             <div className="ui field focus">
               <label>Preço</label>
               <div className="ui left labeled input">
-                <label className="ui label" htmlFor="valor">
+                <label className="ui label" htmlFor="value">
                   R$
                 </label>
                 <input
-                  value={this.state.valor}
-                  onChange={this.setvalor}
-                  id="valor"
+                  value={this.state.value}
+                  onChange={this.setValue}
+                  id="value"
                   type="number"
                   step="0.01"
                   placeholder="Preço da funcionalidade"

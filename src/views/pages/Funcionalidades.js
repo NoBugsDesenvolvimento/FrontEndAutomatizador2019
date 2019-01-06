@@ -13,24 +13,30 @@ class Funcionalidades extends Component {
       cliente: "",
       data: new Date().toLocaleDateString("pt"),
       validade: 7,
-      analista: ""
+      analista: "",
+      token: ""
     };
+  }
+  async componentDidMount() {
+    const res = await fetch("http://localhost:8000/api/token/1");
+    this.setState({ token: await res.json() });
   }
   dismissMessage = e => {
     this.props.closeMessage();
   };
-  setDate = (e,{value}) => {
-    this.setState({data: value})
-  }
-  handleAnalista = e => this.setState({analista: e.target.value})
-  handleValidade = e => this.setState({validade: e.target.value})
+  setDate = (e, { value }) => {
+    this.setState({ data: value });
+  };
+  handleAnalista = e => this.setState({ analista: e.target.value });
+  handleValidade = e => this.setState({ validade: e.target.value });
+  handleVisao = e => this.setState({ visao: e.target.value})
   render() {
     return (
       <div>
         <header>
           <title> Gerar novo PESw </title>
         </header>
-        <div className="ui centered container">
+        <div className="ui left aligned container">
           <input
             type="hidden"
             name="funcionalidades"
@@ -48,51 +54,83 @@ class Funcionalidades extends Component {
             </thead>
             <tbody id="table">
               {this.props.funcionalidades.map(func => (
-                <tr key={func.nome+func.descricao}>
-                  <td className="collapsing">{func.nome}</td>
-                  <td className="collapsing">R$ {func.valor.toFixed(2)}</td>
-                  <td>{func.descricao}</td>
+                <tr key={func.name + func.description}>
+                  <td className="collapsing">{func.name}</td>
+                  <td className="collapsing">R$ {func.value.toFixed(2)}</td>
+                  <td>{func.description}</td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <div className="ui form">
-            <div className="two fields">
+          <form
+            method="post"
+            target="_blank"
+            action="http://localhost:8000/pesw/pdf"
+          >
+            <div className="ui form">
+              <div className="two fields">
+                <div className="ui field">
+                  <label> Analista </label>
+                  <input
+                    name="analista"
+                    value={this.state.analista}
+                    onChange={this.handleAnalista}
+                    type="text"
+                    placeholder="Nome do analista"
+                  />
+                </div>
+                <div className="ui field">
+                  <label> Cliente </label>
+                  <input
+                    name="cliente"
+                    value={this.state.nome}
+                    type="text"
+                    placeholder="Nome do cliente"
+                  />
+                </div>
+              </div>
+              <div className="two fields">
+                <div className="ui field">
+                  <label> Data </label>
+                  <DateInput
+                    onChange={this.setDate}
+                    value={this.state.data}
+                    iconPosition="left"
+                  />
+                </div>
+                <div className="ui field">
+                  <label> Validade (em dias) </label>
+                  <input
+                    onChange={this.handleValidade}
+                    name="validade"
+                    type="number"
+                    value={this.state.validade}
+                  />
+                </div>
+              </div>
               <div className="ui field">
-                <label> Analista </label>
-                <input
-                  value={this.state.analista}
-                  onChange={this.handleAnalista}
-                  type="text"
-                  placeholder="Nome do analista"
+                <label> Visão Geral do Produto</label>
+                <textarea
+                  name="visao"
+                  rows="5"
+                  onChange={this.setVisao}
+                  value={this.state.visao}
                 />
               </div>
-              <div className="ui field">
-                <label> Cliente </label>
-                <input
-                  value={this.state.nome}
-                  type="text"
-                  placeholder="Nome do cliente"
-                />
+              <div className="ui centered">
+                <button type="submit" className="ui labeled icon button">
+                  <i className="file alternate icon" />
+                  Gerar PESw
+                </button>
               </div>
+              <input hidden name="token" value={this.state.token} />
+              <input
+                hidden
+                name="funcionalidades"
+                value={JSON.stringify(this.props.funcionalidades)}
+              />
             </div>
-            <div className="two fields">
-              <div className="ui field">
-                <label> Data </label>
-                <DateInput onChange={this.setDate} value={this.state.data} iconPosition="left" />
-              </div>
-              <div className="ui field">
-                <label> Validade (em dias) </label>
-                <input onChange={this.handleValidade} type="number" value={this.state.validade} />
-              </div>
-            </div>
-            <div className="ui centered">
-              <div className="ui labeled icon button" onClick={this.onSubmit}>
-                <i className="file alternate icon" />
-                Gerar PESw
-              </div>
-            </div>
-          </div>
+          </form>
         </div>
         <div
           className="message-box"
