@@ -30,7 +30,7 @@ class App extends Component {
               <img src={Logo} alt="Logo" />
             </a>
             {Routes.map(rota => (
-              <a key={rota.name} className="item" href={`/#${rota.path}`}>
+              <a style={{ fontSize: 20 }} key={rota.name} className="item" href={`/#${rota.path}`}>
                 {rota.name}
               </a>
             ))}

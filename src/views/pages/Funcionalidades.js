@@ -12,6 +12,7 @@ class Funcionalidades extends Component {
     this.state = {
       cliente: "",
       data: new Date().toLocaleDateString("pt"),
+      valido: new Date().toLocaleDateString("pt"),
       validade: 7,
       analista: "",
       token: ""
@@ -25,7 +26,10 @@ class Funcionalidades extends Component {
     this.props.closeMessage();
   };
   setDate = (e, { value }) => {
-    this.setState({ data: value });
+    let valido = new Date(value)
+    valido = valido.setDate(valido.getDate() + this.state.validade)
+    this.setState({ data: value, valido });
+
   };
   handleAnalista = e => this.setState({ analista: e.target.value });
   handleValidade = e => this.setState({ validade: e.target.value });
@@ -50,14 +54,20 @@ class Funcionalidades extends Component {
                 <th>Nome</th>
                 <th>Valor</th>
                 <th>Descrição</th>
+                <th></th>
               </tr>
             </thead>
             <tbody id="table">
-              {this.props.funcionalidades.map(func => (
+              {this.props.funcionalidades.map((func,index) => (
                 <tr key={func.name + func.description}>
                   <td className="collapsing">{func.name}</td>
                   <td className="collapsing">R$ {func.value.toFixed(2)}</td>
                   <td>{func.description}</td>
+                  <td className="collapsing">
+                    <div className="ui icon error button" onClick={e => this.props.remove(index)}>
+                      <i className="remove icon"/>
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -124,6 +134,7 @@ class Funcionalidades extends Component {
                 </button>
               </div>
               <input hidden name="token" value={this.state.token} />
+              <input hidden name="valido" value={this.state.valido} />
               <input
                 hidden
                 name="funcionalidades"
@@ -167,7 +178,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    closeMessage: () => dispatch({ type: "HIDE_MESSAGE" })
+    closeMessage: () => dispatch({ type: "HIDE_MESSAGE" }),
+    remove: (index) => dispatch({type: "REMOVE_FUNC", index })
   };
 };
 
