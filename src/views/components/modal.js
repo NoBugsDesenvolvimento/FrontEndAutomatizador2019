@@ -6,7 +6,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { Button, Modal, Dropdown } from "semantic-ui-react";
+import { Button, Modal, Dropdown, Header } from "semantic-ui-react";
 
 class FuncionalidadeModal extends Component {
   constructor() {
@@ -82,9 +82,11 @@ class FuncionalidadeModal extends Component {
     return (
       <Modal
         open={this.state.open}
+        onClose={this.close}
         size="tiny"
         trigger={
           <div
+            style={{marginBottom: 10}}
             className="ui labeled icon button"
             onClick={() => {
               if (this.state.funcionalidades.length === 0)
@@ -97,7 +99,7 @@ class FuncionalidadeModal extends Component {
           </div>
         }
       >
-        <Modal.Header>Inserir funcionalidade</Modal.Header>
+        <Header icon="plus" content="Inserir funcionalidade"/>
         <div className="centered scrolling content ui form">
           <div className="ui form">
             <div className="ui field">
@@ -117,11 +119,11 @@ class FuncionalidadeModal extends Component {
               />
             </div>
             <div className="ui field focus">
-              <label>name</label>
+              <label>Nome</label>
               <input
                 value={this.state.name}
                 onChange={this.setName}
-                placeholder="name da funcionalidade"
+                placeholder="Nome da funcionalidade"
               />
             </div>
             <div className="ui field">
