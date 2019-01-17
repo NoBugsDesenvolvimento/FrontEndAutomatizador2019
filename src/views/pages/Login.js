@@ -33,7 +33,7 @@ export default class Login extends Component {
             <div class="ui grid fluid content">
               <div class="ui input row">
                 <input
-                  placeholder="Usuário/email"
+                  placeholder="Usuário/E-mail"
                   ref={input => {
                     this.emailInput = input;
                   }}

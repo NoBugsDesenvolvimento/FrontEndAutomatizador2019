@@ -101,7 +101,7 @@ class Documentos extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    dispatchDoc: doc => dispatch({ type: "SET_BACKUP", doc })
+    dispatchDoc: doc => dispatch({ type: "SET_DOC", doc })
   };
 };
 
