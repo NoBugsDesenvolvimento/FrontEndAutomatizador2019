@@ -5,27 +5,49 @@
 
 import React, { Component } from "react";
 
-import { Transition } from "semantic-ui-react";
+import {connect } from "react-redux"
 
-export default class Login extends Component {
+import { Transition, Checkbox } from "semantic-ui-react";
+
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
+      user: "",
       password: "",
-      visible: false
+      visible: false,
+      remember: false
     };
   }
   componentDidMount() {
-    this.setState({visible: true}, () => this.emailInput.focus());
+    this.setState({ visible: true }, () => this.emailInput.focus());
   }
+  submit = async ({ user, password }) => {
+    try {
+      const res = await fetch("http://localhost:8000/api/login", {
+        headers: {
+          "Content-Type": "application-json"
+        },
+        method: "post",
+        body: JSON.stringify({ user, password })
+      })
+      if(res.status === 200){
+        const data = await res.json()
+        this.props.login(data)
+      }
+      else if(res.status === 400)
+        console.log(await res.text())
+    } catch(e){
+      console.log(e)
+    }
+  };
   render() {
     return (
-      <Transition visible={this.state.visible} duration={1500} animation="fade">
+      <Transition visible={this.state.visible} duration={3000} animation="fade">
         <div class="ui center aligned container">
           <div
-            class="ui centered card"
-            style={{ marginTop: "12vh", width: "fit-content" }}
+            class="ui centered container card"
+            style={{ marginTop: "12vh", maxWidth: "70%", minWidth: "40%" }}
           >
             <div class="center aligned content">
               <p class="header"> Conectar-se </p>
@@ -37,12 +59,33 @@ export default class Login extends Component {
                   ref={input => {
                     this.emailInput = input;
                   }}
+                  onChange={e =>
+                    this.setState({
+                      user: e.target.value
+                    })
+                  }
                 />
               </div>
               <div class="ui input row">
-                <input placeholder="Senha" type="password" />
+                <input
+                  onChange={e =>
+                    this.setState({
+                      password: e.target.value
+                    })
+                  }
+                  placeholder="Senha"
+                  type="password"
+                />
               </div>
-              <button type="submit" class="ui button primary">
+              <Checkbox
+                className="row"
+                style={{ paddingBottom: 20 }}
+                label="Mantenha-me conectado"
+                onChange={e =>
+                  this.setState({ remember: !this.state.remember })
+                }
+              />
+              <button onClick={e => this.submit(this.state)} class="ui button primary">
                 Conectar
               </button>
             </div>
@@ -52,3 +95,11 @@ export default class Login extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    login: (data) => dispatch({type: "LOGIN", data})
+  }
+}
+
+export default connect(null,mapDispatchToProps)(Login)

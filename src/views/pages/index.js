@@ -6,3 +6,4 @@
 export { default as Funcionalidades } from "./Funcionalidades";
 export { default as Login } from "./Login";
 export { default as Documentos } from "./Documentos"
+export { default as Home } from "./Home"
