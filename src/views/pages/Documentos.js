@@ -1,3 +1,8 @@
+/*
+    Autor: Matheus dos Reis <matheusdrdj@gmail.com>
+    Data: 06/01/2019
+*/
+
 import React, { Component } from "react";
 import { Funcionalidades } from ".";
 

@@ -69,6 +69,7 @@ class FuncionalidadeModal extends Component {
   setDesc = e => {
     this.setState({ description: e.target.value });
   };
+  // Método que envia uma nova funcionalidade para a store
   add = e => {
     this.props.addFunc({
       id: this.state.id,

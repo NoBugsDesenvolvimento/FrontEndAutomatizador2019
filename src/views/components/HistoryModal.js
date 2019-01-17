@@ -1,3 +1,8 @@
+/*
+    Autor: Matheus dos Reis <matheusdrdj@gmail.com>
+    Data: 15/01/2019
+*/
+
 import React, { Component } from "react";
 
 import { Modal, Header } from "semantic-ui-react";
@@ -12,24 +17,29 @@ class HistoryModal extends Component {
   componentDidMount = () => {
     this.fetchHistory();
   };
+  // Fecha a modal
   close = e => {
     this.setState({ open: false });
   };
+  // Abre a Modal
   open = async e => {
     this.fetchHistory();
     this.setState({ open: true });
   };
+  // Seleciona a linha da tabela
   selectRow = id => {
     if (this.state.selected === id) {
       this.setState({ selected: null });
     } else this.setState({ selected: id });
   };
+  // Requisita os histórico de documentos da API
   fetchHistory = async () => {
     try {
       const res = await fetch("http://localhost:8000/api/history");
       this.setState({ history: await res.json() });
     } catch (error) {}
   };
+  // Envia o documento selecionado para a store
   updateDoc = e => {
     const doc = this.state.history.filter(doc => doc.id === this.state.selected)[0]
     this.props.dispatchDoc(doc)
@@ -98,7 +108,7 @@ class HistoryModal extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    dispatchDoc: (doc) => dispatch({type: "SET_BACKUP", doc})
+    dispatchDoc: (doc) => dispatch({type: "SET_DOC", doc})
   }
 }
 
