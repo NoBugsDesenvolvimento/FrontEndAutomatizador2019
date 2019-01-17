@@ -8,13 +8,14 @@ import React, { Component } from "react";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 
+import Menu from "./views/components/Menu"
+
 // Importando CSS and images
 import "./css/App.css";
 import "./css/index.css";
-import Logo from "./static/img/logo.png";
 
 // Importando router
-import Roteador, { Routes } from "./controllers/router";
+import Roteador from "./controllers/router";
 
 // Importando e criando a Store
 import reducers from "./controllers/store";
@@ -25,16 +26,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div className="App">
-          <div className="ui theme-color inverted fixed borderless menu">
-            <a href="#/" className="item">
-              <img src={Logo} alt="Logo" />
-            </a>
-            {Routes.map(rota => rota.menu ?
-                <a style={{ fontSize: 20 }} key={rota.name} className="item" href={`/#${rota.rota}`}>
-                  {rota.name}
-                </a> : <div/>)
-            }
-          </div>
+          <Menu/>
           <Roteador />
         </div>
       </Provider>

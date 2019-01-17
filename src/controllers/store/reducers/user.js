@@ -6,8 +6,11 @@ export default function user(state = null, action) {
             let expire = new Date();
             expire.setMinutes(expire.getMinutes() + action.data.token.expires)
             document.cookie=`token=${action.data.token.data};expires=${expire.toGMTString()}`
-            return action.data.user
+            let user = action.data.user;
+            user.token = action.data.token.data
+            return user
         case "LOGOFF":
+            document.cookie=""
             return null
         default:
             return state

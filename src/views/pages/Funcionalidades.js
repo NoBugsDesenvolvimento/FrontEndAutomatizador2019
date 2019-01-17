@@ -15,13 +15,10 @@ class Funcionalidades extends Component {
       data: new Date().toISOString().split("T")[0],
       valido: new Date(),
       validade: 7,
-      analista: "",
-      token: ""
+      analista: ""
     };
   }
   async componentDidMount() {
-    const res = await fetch("http://localhost:8000/api/token/1");
-    this.setState({ token: await res.json() });
     this.setState({
       ...JSON.parse(this.props.doc.data),
       analista: this.props.doc.autor
@@ -170,12 +167,14 @@ class Funcionalidades extends Component {
                   Gerar PESw
                 </button>
               </div>
-              <input
-                onChange={() => {}}
-                hidden
-                name="token"
-                value={this.state.token}
-              />
+              {this.props.user !== null && (
+                <input
+                  onChange={() => {}}
+                  hidden
+                  name="token"
+                  value={this.props.user.token}
+                />
+              )}
               <input
                 onChange={() => {}}
                 hidden
@@ -221,7 +220,8 @@ const mapStateToProps = state => {
     message_open: state.message.show,
     message_status: state.message.status,
     message_text: state.message.message,
-    doc: state.doc
+    doc: state.doc,
+    user: state.user
   };
 };
 

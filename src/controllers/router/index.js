@@ -25,7 +25,8 @@ class Routing extends Component {
     let token = getCookie("token")
     if (token !== undefined){
       const res = await fetch(`http://localhost:8000/api/token/${token}`)
-      const data = await res.json()
+      let data = await res.json()
+      data.token = token
       this.props.login(data)
     }
   }

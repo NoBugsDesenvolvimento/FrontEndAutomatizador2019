@@ -7,7 +7,6 @@ class Home extends Component {
   componentDidMount() {
   }
   render() {
-      console.log(this.props.user)
     if (this.props.user !== null) {
       return (
         <div className="ui container fluid">

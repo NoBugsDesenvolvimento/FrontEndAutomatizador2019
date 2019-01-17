@@ -44,16 +44,16 @@ class Login extends Component {
   render() {
     return (
       <Transition visible={this.state.visible} duration={3000} animation="fade">
-        <div class="ui center aligned container">
+        <div className="ui center aligned container">
           <div
-            class="ui centered container card"
+            className="ui centered container card"
             style={{ marginTop: "12vh", maxWidth: "70%", minWidth: "40%" }}
           >
-            <div class="center aligned content">
-              <p class="header"> Conectar-se </p>
+            <div className="center aligned content">
+              <p className="header"> Conectar-se </p>
             </div>
-            <div class="ui grid fluid content">
-              <div class="ui input row">
+            <div className="ui grid fluid content">
+              <div className="ui input row">
                 <input
                   placeholder="Usuário/E-mail"
                   ref={input => {
@@ -66,7 +66,7 @@ class Login extends Component {
                   }
                 />
               </div>
-              <div class="ui input row">
+              <div className="ui input row">
                 <input
                   onChange={e =>
                     this.setState({
@@ -85,7 +85,7 @@ class Login extends Component {
                   this.setState({ remember: !this.state.remember })
                 }
               />
-              <button onClick={e => this.submit(this.state)} class="ui button primary">
+              <button onClick={e => this.submit(this.state)} className="ui button primary">
                 Conectar
               </button>
             </div>
